@@ -1,20 +1,23 @@
 {
-  "name": "auto-todos",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AuTsing/auto-todos.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AuTsing/auto-todos/issues"
-  },
-  "homepage": "https://github.com/AuTsing/auto-todos#readme"
+    "name": "auto-todos",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AuTsing/auto-todos.git"
+    },
+    "author": "AuTsing",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/AuTsing/auto-todos/issues"
+    },
+    "homepage": "https://github.com/AuTsing/auto-todos#readme",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "download": "^8.0.0",
+        "request": "^2.88.2"
+    }
 }
