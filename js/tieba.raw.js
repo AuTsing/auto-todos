@@ -37,8 +37,6 @@ const url_fetch_add = {
 signTieBa();
 
 function signTieBa() {
-    useParallel = $nobyda.read('BDTB_DailyBonus_Mode') || useParallel;
-    singleNotifyCount = $nobyda.read('BDTB_DailyBonus_notify') || singleNotifyCount;
     if (!cookieVal) {
         console.log('贴吧签到', '签到失败', '未获取到cookie');
         return;
