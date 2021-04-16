@@ -18,7 +18,7 @@ const url_fetch_sign = {
     headers: {
         'Content-Type': 'application/octet-stream',
         Referer: 'https://tieba.baidu.com/index/tbwise/forum',
-        Cookie: cookieVal,
+        Cookie: 'BDUSS=' + cookieVal,
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16A366',
     },
 };
@@ -27,7 +27,7 @@ const url_fetch_add = {
     method: 'POST',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Cookie: cookieVal,
+        Cookie: 'BDUSS=' + cookieVal,
         'User-Agent':
             'Mozilla/5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X; zh-CN) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/14B100 UCBrowser/10.7.5.650 Mobile',
     },
@@ -45,7 +45,8 @@ function signTieBa() {
         .request(url_fetch_sign)
         .then(
             resp => {
-                const isSuccessResponse = resp && resp.no == 0 && resp.error == 'success' && resp.data.tbs;
+                const data = resp.data;
+                const isSuccessResponse = data && data.no == 0 && data.error == 'success' && data.data.tbs;
                 console.log(resp);
                 if (!isSuccessResponse) {
                     return Promise.reject(['贴吧签到', '签到失败', resp && resp.error ? resp.error : '接口数据获取失败']);
