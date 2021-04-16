@@ -47,13 +47,12 @@ function signTieBa() {
             resp => {
                 const data = resp.data;
                 const isSuccessResponse = data && data.no == 0 && data.error == 'success' && data.data.tbs;
-                console.log(resp);
                 if (!isSuccessResponse) {
-                    return Promise.reject(['贴吧签到', '签到失败', resp && resp.error ? resp.error : '接口数据获取失败']);
+                    return Promise.reject(['贴吧签到', '签到失败', data && data.error ? data.error : '接口数据获取失败']);
                 }
-                process.total = resp.data.like_forum.length;
-                if (resp.data.like_forum && resp.data.like_forum.length > 0) {
-                    return resp.data;
+                process.total = data.data.like_forum.length;
+                if (data.data.like_forum && data.data.like_forum.length > 0) {
+                    return data.data;
                 } else {
                     return Promise.reject(['贴吧签到', '签到失败', '请确认您有关注的贴吧']);
                 }
