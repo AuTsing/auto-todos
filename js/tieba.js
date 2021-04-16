@@ -13,7 +13,7 @@ const resultFile = 'result.txt';
 const errFile = 'err.txt';
 
 async function prepare() {
-    await download(url, dir);
+    // await download(url, dir);
 }
 
 function generate() {
@@ -21,7 +21,7 @@ function generate() {
         throw new Error('未填写COOKIE');
     }
     let content = fs.readFileSync(`${dir}${jsFile}`, 'utf8');
-    content = content.replace(/var cookieVal = \$nobyda.read("CookieTB");/, `var cookieVal = '${cookie}'`);
+    content = content.replace(/const cookieVal = '';/, `const cookieVal = '${cookie}';`);
     fs.writeFileSync(`${dir}${jsFile}`, content, 'utf8');
 }
 
