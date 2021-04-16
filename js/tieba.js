@@ -7,10 +7,9 @@ const cookie = process.env.TIEBA_COOKIE;
 const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/BDTieBa-DailyBonus/TieBa.js';
 const sctKey = process.env.SCT_KEY;
 
-const dir = './tmp/';
 const jsFile = './js/tieba.raw.js';
-const resultFile = 'result.txt';
-const errFile = 'err.txt';
+const resultFile = './result.txt';
+const errFile = './err.txt';
 
 async function prepare() {
     // await download(url, dir);
@@ -26,7 +25,7 @@ function generate() {
 }
 
 function run() {
-    execSync(`node ${jsFile} >> ${dir}${resultFile}`);
+    execSync(`node ${jsFile} >> ${resultFile}`);
 }
 
 function report() {
@@ -34,8 +33,8 @@ function report() {
         const title = '百度贴吧';
         let content = '无执行结果';
 
-        if (fs.existsSync(`${dir}${resultFile}`)) {
-            content = fs.readFileSync(`${dir}${resultFile}`, 'utf8');
+        if (fs.existsSync(`${resultFile}`)) {
+            content = fs.readFileSync(`${resultFile}`, 'utf8');
         }
 
         console.log(content);
