@@ -1,4 +1,4 @@
-name: JD
+name: TIEBA
 
 on:
     schedule:
@@ -15,7 +15,7 @@ jobs:
               with:
                   node-version: '14'
             - run: npm install
-            - run: node ./js/jd.js
+            - run: node ./js/tieba.js
               env:
                   TIEBA_COOKIE: ${{ secrets.TIEBA_COOKIE }}
                   SCT_KEY: ${{ secrets.SCT_KEY }}
