@@ -26,7 +26,7 @@ function generate() {
 }
 
 function run() {
-    execSync(`node ${dir}${filename} >> ${dir}${resultFile}`);
+    execSync(`node ${dir}${jsFile} >> ${dir}${resultFile}`);
 }
 
 function report() {
@@ -34,7 +34,7 @@ function report() {
         const title = '京东';
         let content = '无执行结果';
 
-        if (fs.existsSync(result_path)) {
+        if (fs.existsSync(`${dir}${resultFile}`)) {
             content = fs.readFileSync(`${dir}${resultFile}`, 'utf8');
         }
 
