@@ -8,7 +8,7 @@ const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/BDTieBa-Dail
 const sctKey = process.env.SCT_KEY;
 
 const dir = './tmp/';
-const jsFile = 'TieBa.js';
+const jsFile = './js/tieba.raw.js';
 const resultFile = 'result.txt';
 const errFile = 'err.txt';
 
@@ -20,13 +20,13 @@ function generate() {
     if (!cookie) {
         throw new Error('未填写COOKIE');
     }
-    let content = fs.readFileSync(`${dir}${jsFile}`, 'utf8');
+    let content = fs.readFileSync(`${jsFile}`, 'utf8');
     content = content.replace(/const cookieVal = '';/, `const cookieVal = '${cookie}';`);
-    fs.writeFileSync(`${dir}${jsFile}`, content, 'utf8');
+    fs.writeFileSync(`${jsFile}`, content, 'utf8');
 }
 
 function run() {
-    execSync(`node ${dir}${jsFile} >> ${dir}${resultFile}`);
+    execSync(`node ${jsFile} >> ${dir}${resultFile}`);
 }
 
 function report() {
