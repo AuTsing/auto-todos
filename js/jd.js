@@ -1,7 +1,7 @@
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const download = require('download');
-const sct = require('../shared/sct');
+const sct = require('./sct');
 
 const cookie = process.env.JD_COOKIE;
 const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
