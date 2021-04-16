@@ -47,17 +47,17 @@ function signTieBa() {
             resp => {
                 const isSuccessResponse = resp && resp.no == 0 && resp.error == 'success' && resp.data.tbs;
                 if (!isSuccessResponse) {
-                    return reject(['贴吧签到', '签到失败', resp && resp.error ? resp.error : '接口数据获取失败']);
+                    return Promise.reject(['贴吧签到', '签到失败', resp && resp.error ? resp.error : '接口数据获取失败']);
                 }
                 process.total = resp.data.like_forum.length;
                 if (resp.data.like_forum && resp.data.like_forum.length > 0) {
                     return resp.data;
                 } else {
-                    return reject(['贴吧签到', '签到失败', '请确认您有关注的贴吧']);
+                    return Promise.reject(['贴吧签到', '签到失败', '请确认您有关注的贴吧']);
                 }
             },
             err => {
-                return reject(['贴吧签到', '签到失败', '未获取到签到列表']);
+                return Promise.reject(['贴吧签到', '签到失败', '未获取到签到列表']);
             }
         )
         .then(async data => {
