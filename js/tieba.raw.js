@@ -46,6 +46,7 @@ function signTieBa() {
         .then(
             resp => {
                 const isSuccessResponse = resp && resp.no == 0 && resp.error == 'success' && resp.data.tbs;
+                console.log(resp);
                 if (!isSuccessResponse) {
                     return Promise.reject(['贴吧签到', '签到失败', resp && resp.error ? resp.error : '接口数据获取失败']);
                 }
