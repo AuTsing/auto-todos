@@ -42,9 +42,9 @@ function report() {
     }
 }
 
-function main() {
+async function main() {
     try {
-        prepare();
+        await prepare();
         console.log('下载完成');
 
         generate();
