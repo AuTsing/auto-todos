@@ -16,3 +16,6 @@ jobs:
                   node-version: '14'
             - run: npm install
             - run: node ./js/jd.js
+              env:
+                  JD_COOKIE: ${{ secrets.JD_COOKIE }}
+                  SCT_KEY: ${{ secrets.SCT_KEY }}
