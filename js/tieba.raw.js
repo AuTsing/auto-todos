@@ -1,18 +1,8 @@
 const axios = require('axios');
 
 const cookieVal = '';
-const process = {
-    total: 0,
-    result: [
-        // {
-        //     bar:'',
-        //     level:0,
-        //     exp:0,
-        //     errorCode:0,
-        //     errorMsg:''
-        // }
-    ],
-};
+const results = [];
+
 const url_fetch_sign = {
     url: 'https://tieba.baidu.com/mo/q/newmoindex',
     headers: {
@@ -37,28 +27,28 @@ const url_fetch_add = {
 signTieBa();
 
 function signTieBa() {
-    if (!cookieVal) {
-        console.log('贴吧签到', '签到失败', '未获取到cookie');
-        return;
-    }
-    axios
-        .request(url_fetch_sign)
+    return new Promise((resolve, reject) => {
+        if (!cookieVal) {
+            reject('未获取到COOKIE');
+        } else {
+            return resolve();
+        }
+    })
+        .then(() => axios.request(url_fetch_sign))
         .then(
             resp => {
                 const data = resp.data;
                 const isSuccessResponse = data && data.no == 0 && data.error == 'success' && data.data.tbs;
                 if (!isSuccessResponse) {
-                    return Promise.reject(['贴吧签到', '签到失败', data && data.error ? data.error : '接口数据获取失败']);
+                    return Promise.reject(data && data.error ? data.error : '接口数据获取失败');
                 }
-                process.total = data.data.like_forum.length;
-                if (data.data.like_forum && data.data.like_forum.length > 0) {
-                    return data.data;
-                } else {
-                    return Promise.reject(['贴吧签到', '签到失败', '请确认您有关注的贴吧']);
+                if (data.data.like_forum.length <= 0) {
+                    return Promise.reject('未获取到要签到的贴吧');
                 }
+                return data.data;
             },
             err => {
-                return Promise.reject(['贴吧签到', '签到失败', '未获取到签到列表']);
+                return Promise.reject('获取签到列表失败');
             }
         )
         .then(async data => {
@@ -66,12 +56,9 @@ function signTieBa() {
             const tbs = data.tbs;
             for (const bar of bars) {
                 if (bar.is_sign == 1) {
-                    process.result.push({
-                        bar: `${bar.forum_name}`,
-                        level: bar.user_level,
-                        exp: bar.user_exp,
-                        errorCode: 9999,
-                        errorMsg: '已签到',
+                    results.push({
+                        bar: bar.forum_name,
+                        status: '已签到',
                     });
                 } else {
                     await signBar(bar, tbs);
@@ -79,11 +66,12 @@ function signTieBa() {
             }
         })
         .then(() => {
-            console.log(process.result);
-            console.log('贴吧签到', '签到已满', `${process.result.length}`);
+            results.forEach(result => console.log(`贴吧:${result.bar} ${result.status}`));
+            const succeeded = results.filter(result => result.status === '已签到' || result.status === '签到成功').length;
+            console.log(`签到成功 ${succeeded}/${results.length}`);
         })
         .catch(err => {
-            console.log(err);
+            console.log('签到失败 ' + err);
         });
 }
 
@@ -95,22 +83,19 @@ function signBar(bar, tbs) {
             if (resp.no == 0) {
                 process.result.push({
                     bar: bar.forum_name,
-                    errorCode: 0,
-                    errorMsg: `获得${resp.data.uinfo.cont_sign_num}积分,第${resp.data.uinfo.user_sign_rank}个签到`,
+                    status: '签到成功',
                 });
             } else {
                 process.result.push({
                     bar: bar.forum_name,
-                    errorCode: resp.no,
-                    errorMsg: resp.error,
+                    status: resp.error,
                 });
             }
         })
         .catch(err => {
-            process.result.push({
+            results.push({
                 bar: bar.forum_name,
-                errorCode: 999,
-                errorMsg: '接口错误',
+                status: '签到失败,接口错误',
             });
         });
 }
