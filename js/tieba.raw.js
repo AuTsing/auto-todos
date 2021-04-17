@@ -79,6 +79,7 @@ function signTieBa() {
             }
         })
         .then(() => {
+            console.log(process.result);
             console.log('贴吧签到', '签到已满', `${process.result.length}`);
         })
         .catch(err => {
