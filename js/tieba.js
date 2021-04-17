@@ -37,8 +37,8 @@ function report() {
             content = fs.readFileSync(`${resultFile}`, 'utf8');
         }
 
-        console.log(content);
-        // sct.send(title, content);
+        // console.log(content);
+        sct.send(title, content);
     }
 }
 
